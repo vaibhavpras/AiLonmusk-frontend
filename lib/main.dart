@@ -61,64 +61,59 @@ class _MyHomePageState extends State<MyHomePage> {
     bool isDesktopH = MediaQuery.of(context).size.width > 500 ? true : false;
 
     return Scaffold(
-        body: Container(
-            alignment: Alignment.center,
-            color: Color(0xFF15202b),
-            padding: EdgeInsets.all(32),
-            child: LayoutBuilder(builder: (ctx, constraints) {
-              return SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
-                              child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      height: isDesktopW
-                            ? 500
-                            : MediaQuery.of(context).size.height * 0.5,
-                        width: isDesktopW
-                            ? 500
-                            : MediaQuery.of(context).size.width * 1,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 0.5)),
-                        child: Bio(ctx: ctx)),
-                    myData.isEmpty
-                        ? Container(
-                            width: isDesktopW
-                            ? 500
-                            : MediaQuery.of(context).size.width * 1,
-                            height: isDesktopW
-                            ? 500
-                            : MediaQuery.of(context).size.height * 0.5,
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.grey, width: 0.5)),
-                                    child: Center(child: Text("No tweets yet", style: TextStyle(color: Colors.grey, fontSize: 12)),),
-                          )
-                        : Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 0.5)),
-                              width: isDesktopW
-                            ? 500
-                            : MediaQuery.of(context).size.height * 1,
-                              child: ListView.builder(
-                                  reverse: true,
-                                  shrinkWrap: true,
-                                  itemCount: myData.length,
-                                  itemBuilder: (ctx, index) {
-                                    return TweetList(text: myData[index]);
-                                  }),
-                            ),
-                          )
-                    //Text(myData[0]),
-                  ],
-                ),
-              );
-            })),
-        floatingActionButton: FloatingActionButton(
-          onPressed: makeRequest,
-          child: Icon(Icons.add),
-        ));
+  backgroundColor: Color(0xFF15202b),
+    body: LayoutBuilder(builder: (ctx, constraints) {
+      return SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                  height:MediaQuery.of(context).size.height * 0.6,
+                  width: isDesktopW
+                      ? 500
+                      : MediaQuery.of(context).size.width * 1,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 0.5)),
+                  child: Bio(ctx: ctx)),
+              myData.isEmpty
+                  ? Container(
+                width: isDesktopW
+                    ? 500
+                    : MediaQuery.of(context).size.width * 1,
+                height: MediaQuery.of(context).size.height * 0.4,
+                decoration: BoxDecoration(
+                    border:
+                    Border.all(color: Colors.grey, width: 0.5)),
+                child: Center(child: Text("No tweets yet", style: TextStyle(color: Colors.grey, fontSize: 12)),),
+              )
+                  : Container(
+                    decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 0.5)),
+                    width: isDesktopW
+                        ? 500
+                        : MediaQuery.of(context).size.width * 1,
+                    child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        reverse: true,
+                        shrinkWrap: true,
+                        itemCount: myData.length,
+                        itemBuilder: (ctx, index) {
+                          return TweetList(text: myData[index]);
+                        }),
+                  )
+              //Text(myData[0]),
+            ],
+          ),
+        ),
+      );
+    }),
+    floatingActionButton: FloatingActionButton(
+      onPressed: makeRequest,
+      child: Icon(Icons.add),
+    ));
   }
 }

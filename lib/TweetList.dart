@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class TweetList extends StatefulWidget {
   final String text;
@@ -15,7 +16,6 @@ class _TweetListState extends State<TweetList> {
     return Container(
       //decoration: BoxDecoration(border: Border.all(color: Colors.grey, width:0.5)),
       color: Color(0xFF15202b),
-      width: 500,
       child: ListTile(
         leading: CircleAvatar(
           backgroundImage: NetworkImage('assets/elonpfp.jpg'),
