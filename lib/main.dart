@@ -32,6 +32,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int itemCount = 0;
 
   Future<String> makeRequest() async {
+
+    print("Getting data from API...");
     var response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
 
@@ -55,31 +57,65 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDesktopW = MediaQuery.of(context).size.width > 500 ? true : false;
+    bool isDesktopH = MediaQuery.of(context).size.width > 500 ? true : false;
+
     return Scaffold(
         body: Container(
-          padding: EdgeInsets.all(32),
-          child: Column(
-            children: <Widget>[
-              TextField(
-                controller: prefixController,
-              ),
-              SizedBox(
-                height: 32,
-              ),
-              Bio(),
-              myData.isEmpty
-                  ? Container()
-                  : Expanded(
-                      child: ListView.builder(
-                          itemCount: myData.length,
-                          itemBuilder: (ctx, index) {
-                            return TweetList(text: myData[index]);
-                          }),
-                    )
-              //Text(myData[0]),
-            ],
-          ),
-        ),
+            alignment: Alignment.center,
+            color: Color(0xFF15202b),
+            padding: EdgeInsets.all(32),
+            child: LayoutBuilder(builder: (ctx, constraints) {
+              return SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                              child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      height: isDesktopW
+                            ? 500
+                            : MediaQuery.of(context).size.height * 0.5,
+                        width: isDesktopW
+                            ? 500
+                            : MediaQuery.of(context).size.width * 1,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 0.5)),
+                        child: Bio(ctx: ctx)),
+                    myData.isEmpty
+                        ? Container(
+                            width: isDesktopW
+                            ? 500
+                            : MediaQuery.of(context).size.width * 1,
+                            height: isDesktopW
+                            ? 500
+                            : MediaQuery.of(context).size.height * 0.5,
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.grey, width: 0.5)),
+                                    child: Center(child: Text("No tweets yet", style: TextStyle(color: Colors.grey, fontSize: 12)),),
+                          )
+                        : Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 0.5)),
+                              width: isDesktopW
+                            ? 500
+                            : MediaQuery.of(context).size.height * 1,
+                              child: ListView.builder(
+                                  reverse: true,
+                                  shrinkWrap: true,
+                                  itemCount: myData.length,
+                                  itemBuilder: (ctx, index) {
+                                    return TweetList(text: myData[index]);
+                                  }),
+                            ),
+                          )
+                    //Text(myData[0]),
+                  ],
+                ),
+              );
+            })),
         floatingActionButton: FloatingActionButton(
           onPressed: makeRequest,
           child: Icon(Icons.add),
