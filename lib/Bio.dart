@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 
 class Bio extends StatelessWidget {
 
-  BuildContext ctx;
+  final BuildContext ctx;
 
   Bio({this.ctx});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      //width: MediaQuery.of(ctx).size.width * 0.45,
-      //width: 500,
       color: Color(0xFF15202b),
       child: LayoutBuilder(builder: (ctx, constraints) {
         return Stack(children: [
@@ -63,7 +61,7 @@ class Bio extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10, top: 8),
               child: Padding(
-                padding: EdgeInsets.only(bottom: constraints.maxWidth * 0.05),
+                padding: EdgeInsets.only(bottom: constraints.maxWidth * 0.04),
                 child: Row(
                   children: [
                     Text("93",

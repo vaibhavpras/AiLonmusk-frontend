@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import './Bio.dart';
+import './TweetScreen.dart';
+import './about.dart';
 
 void main() => runApp(MyApp());
 
@@ -32,7 +34,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int itemCount = 0;
 
   Future<String> makeRequest() async {
-
     print("Getting data from API...");
     var response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
@@ -57,63 +58,74 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDesktopW = MediaQuery.of(context).size.width > 500 ? true : false;
-    bool isDesktopH = MediaQuery.of(context).size.width > 500 ? true : false;
+    final mediaQuery = MediaQuery.of(context);
+    bool isDesktop = mediaQuery.size.width > 500 ? true : false;
 
     return Scaffold(
-  backgroundColor: Color(0xFF15202b),
-    body: LayoutBuilder(builder: (ctx, constraints) {
-      return SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              SizedBox(
-                height: 15,
+        backgroundColor: Color(0xFF15202b),
+        body: LayoutBuilder(builder: (ctx, constraints) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(32),
+              child: Container(
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                        //height: mediaQuery.size.height * 0.52,
+                        width: isDesktop ? 500 : mediaQuery.size.width * 1,
+                        decoration: BoxDecoration(
+                            border: Border(
+                                top: BorderSide(width: 0.5, color: Colors.grey),
+                                left:
+                                    BorderSide(width: 0.5, color: Colors.grey),
+                                right: BorderSide(
+                                    width: 0.5, color: Colors.grey))),
+                        child: Bio(ctx: ctx)),
+                    DefaultTabController(
+                        length: 2,
+                        initialIndex: 0,
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      left: BorderSide(
+                                          width: 0.5, color: Colors.grey),
+                                      right: BorderSide(
+                                          width: 0.5, color: Colors.grey))),
+                              width:
+                                  isDesktop ? 500 : mediaQuery.size.width * 1,
+                              child: TabBar(tabs: [
+                                Tab(text: "Tweets"),
+                                Tab(text: "About")
+                              ]),
+                            ),
+                            Container(
+                                width:
+                                    isDesktop ? 500 : mediaQuery.size.width * 1,
+                                height: 500,
+                                child: TabBarView(children: [
+                                  TweetScreen(myData, isDesktop, mediaQuery),
+                                  About(),
+                                ])),
+                          ],
+                        )),
+
+                    //Text(myData[0]),
+                  ],
+                ),
               ),
-              Container(
-                  height:MediaQuery.of(context).size.height * 0.6,
-                  width: isDesktopW
-                      ? 500
-                      : MediaQuery.of(context).size.width * 1,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 0.5)),
-                  child: Bio(ctx: ctx)),
-              myData.isEmpty
-                  ? Container(
-                width: isDesktopW
-                    ? 500
-                    : MediaQuery.of(context).size.width * 1,
-                height: MediaQuery.of(context).size.height * 0.4,
-                decoration: BoxDecoration(
-                    border:
-                    Border.all(color: Colors.grey, width: 0.5)),
-                child: Center(child: Text("No tweets yet", style: TextStyle(color: Colors.grey, fontSize: 12)),),
-              )
-                  : Container(
-                    decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 0.5)),
-                    width: isDesktopW
-                        ? 500
-                        : MediaQuery.of(context).size.width * 1,
-                    child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        reverse: true,
-                        shrinkWrap: true,
-                        itemCount: myData.length,
-                        itemBuilder: (ctx, index) {
-                          return TweetList(text: myData[index]);
-                        }),
-                  )
-              //Text(myData[0]),
-            ],
-          ),
-        ),
-      );
-    }),
-    floatingActionButton: FloatingActionButton(
-      onPressed: makeRequest,
-      child: Icon(Icons.add),
-    ));
+            ),
+          );
+        }),
+        floatingActionButton: FloatingActionButton(
+          onPressed: makeRequest,
+          child: Icon(Icons.add),
+        ));
   }
 }
