@@ -13,7 +13,6 @@ class TweetList extends StatefulWidget {
 
 class _TweetListState extends State<TweetList> {
   Random random = new Random();
-  //int randomNumber = random.nextInt(100);
 
   @override
   Widget build(BuildContext context) {
@@ -40,22 +39,37 @@ class _TweetListState extends State<TweetList> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 65, bottom:10),
+            padding: const EdgeInsets.only(left: 65, bottom: 10),
             child: Row(children: [
-              Icon(Icons.message, color: Colors.grey, size: 14,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text('${random.nextInt(100) + 20}K', style: TextStyle(fontSize: 10, color: Colors.grey)),
+              Icon(
+                Icons.message,
+                color: Colors.grey,
+                size: 14,
               ),
-              Icon(Icons.share, color: Colors.grey, size: 14,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text('${random.nextInt(300) + 20}K', style: TextStyle(fontSize: 10, color: Colors.grey)),
+                child: Text('${random.nextInt(100) + 20}K',
+                    style: TextStyle(fontSize: 10, color: Colors.grey)),
               ),
-              Icon(Icons.favorite, color: Colors.grey, size: 14,),
+              Icon(
+                Icons.share,
+                color: Colors.grey,
+                size: 14,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text('${random.nextInt(300) + 20}K', style: TextStyle(fontSize: 10, color: Colors.grey)),
+                child: Text('${random.nextInt(300) + 20}K',
+                    style: TextStyle(fontSize: 10, color: Colors.grey)),
+              ),
+              Icon(
+                Icons.favorite,
+                color: Colors.grey,
+                size: 14,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('${random.nextInt(300) + 20}K',
+                    style: TextStyle(fontSize: 10, color: Colors.grey)),
               )
             ]),
           )

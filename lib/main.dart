@@ -1,6 +1,6 @@
-import 'package:ailonmuskfrontend/TweetList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import './Bio.dart';
@@ -15,8 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: Colors.blue,
+          inputDecorationTheme: InputDecorationTheme(
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white)))),
       home: MyHomePage(),
     );
   }
@@ -28,15 +30,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String url = "https://ailonmuskapi-6uxbltfubq-uc.a.run.app";
+  String urlRaw = "https://ailonmuskapi-6uxbltfubq-uc.a.run.app";
 
   final List<String> myData = [];
   int itemCount = 0;
+  bool _isLoading = false;
 
-  Future<String> makeRequest() async {
+  void makeRequest(String prefix) async {
+    setState(() {
+      _isLoading = true;
+    });
     print("Getting data from API...");
-    var response = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    print("Prefix: ${prefix}");
+
+    String urlPrefix = urlRaw + ('/?prefix=${prefix}');
+
+    var response = await http.get(Uri.encodeFull(urlPrefix),
+        headers: {"Accept": "application/json"});
 
     String data;
 
@@ -47,8 +57,11 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
 
     setState(() {
+      data = data.replaceAll('<|startoftext|>', '');
+      data = data.replaceAll('  ', '');
       myData.add(data);
       itemCount++;
+      _isLoading = false;
     });
 
     print(myData);
@@ -61,71 +74,187 @@ class _MyHomePageState extends State<MyHomePage> {
     final mediaQuery = MediaQuery.of(context);
     bool isDesktop = mediaQuery.size.width > 500 ? true : false;
 
-    return Scaffold(
-        backgroundColor: Color(0xFF15202b),
-        body: LayoutBuilder(builder: (ctx, constraints) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(32),
-              child: Container(
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                        //height: mediaQuery.size.height * 0.52,
-                        width: isDesktop ? 500 : mediaQuery.size.width * 1,
-                        decoration: BoxDecoration(
-                            border: Border(
-                                top: BorderSide(width: 0.5, color: Colors.grey),
-                                left:
-                                    BorderSide(width: 0.5, color: Colors.grey),
-                                right: BorderSide(
-                                    width: 0.5, color: Colors.grey))),
-                        child: Bio(ctx: ctx)),
-                    DefaultTabController(
-                        length: 2,
-                        initialIndex: 0,
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      left: BorderSide(
-                                          width: 0.5, color: Colors.grey),
-                                      right: BorderSide(
-                                          width: 0.5, color: Colors.grey))),
-                              width:
-                                  isDesktop ? 500 : mediaQuery.size.width * 1,
-                              child: TabBar(tabs: [
-                                Tab(text: "Tweets"),
-                                Tab(text: "About")
-                              ]),
-                            ),
-                            Container(
-                                width:
-                                    isDesktop ? 500 : mediaQuery.size.width * 1,
-                                height: 500,
-                                child: TabBarView(children: [
-                                  TweetScreen(myData, isDesktop, mediaQuery),
-                                  About(),
-                                ])),
-                          ],
-                        )),
+    return GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
 
-                    //Text(myData[0]),
-                  ],
+          if (!currentFocus.hasPrimaryFocus &&
+              currentFocus.focusedChild != null) {
+            currentFocus.focusedChild.unfocus();
+          }
+        },
+        child: Scaffold(
+          backgroundColor: Color(0xFF15202b),
+          body: LayoutBuilder(builder: (ctx, constraints) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(top: 30),
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Container(
+                        width: mediaQuery.size.width * 0.6,
+                        padding: EdgeInsets.only(top: 10, bottom: 25),
+                        child: _isLoading
+                            ? Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.only(top: 12.8, bottom: 10),
+                                child: Text("Elon is typing.... (he may take a while)",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: isDesktop
+                                            ? 20
+                                            : mediaQuery.size.width * 0.03)),
+                              )
+                            : Wrap(
+                                alignment: WrapAlignment.center,
+                                children: [
+                                  Container(
+                                    padding:
+                                        EdgeInsets.only(top: 12.8, bottom: 10),
+                                    child: Text("Hey Elon, tweet something ",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: isDesktop
+                                                ? 20
+                                                : mediaQuery.size.width *
+                                                    0.03)),
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(right: 10),
+                                      height: isDesktop
+                                          ? 60
+                                          : mediaQuery.size.width * 0.2,
+                                      width: 250,
+                                      child: TextField(
+                                        controller: prefixController,
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.all(5),
+                                          prefixText: 'about ',
+                                          prefixStyle: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: isDesktop
+                                                  ? 20
+                                                  : mediaQuery.size.width *
+                                                      0.030),
+                                        ),
+                                      )),
+                                  Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    height: isDesktop
+                                        ? 40
+                                        : mediaQuery.size.width * 0.1,
+                                    width: isDesktop
+                                        ? 90
+                                        : mediaQuery.size.width * 0.2,
+                                    child: RaisedButton(
+                                        color: Color(0xff1b7dba),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        onPressed: () {
+                                          makeRequest(prefixController.text);
+                                        },
+                                        child: Text("Please!",
+                                            style: TextStyle(
+                                                fontSize: isDesktop
+                                                    ? 15
+                                                    : mediaQuery.size.width *
+                                                        0.03,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                        disabledColor: Color(0xff1b7dba)),
+                                  )
+                                ],
+                              ),
+                      ),
+
+                      Container(
+                          //height: mediaQuery.size.height * 0.52,
+                          width: isDesktop ? 500 : mediaQuery.size.width * 1,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  top: BorderSide(
+                                      width: 0.5, color: Colors.grey),
+                                  left: BorderSide(
+                                      width: 0.5, color: Colors.grey),
+                                  right: BorderSide(
+                                      width: 0.5, color: Colors.grey))),
+                          child: Bio(ctx: ctx)),
+                      DefaultTabController(
+                          length: 2,
+                          initialIndex: 0,
+                          child: SizedBox(
+                            height: mediaQuery.size.height * 0.6,
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          left: BorderSide(
+                                              width: 0.5, color: Colors.grey),
+                                          right: BorderSide(
+                                              width: 0.5, color: Colors.grey))),
+                                  width: isDesktop
+                                      ? 500
+                                      : mediaQuery.size.width * 1,
+                                  child: TabBar(
+                                      indicatorColor: Color(0xff1b7dba),
+                                      unselectedLabelColor: Colors.grey,
+                                      labelColor: Color(0xff1b7dba),
+                                      labelStyle: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                      unselectedLabelStyle: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold),
+                                      tabs: [
+                                        Tab(
+                                          text: "Tweets",
+                                        ),
+                                        Tab(text: "About")
+                                      ]),
+                                ),
+                                Expanded(
+                                    child: Container(
+                                  width: isDesktop
+                                      ? 500
+                                      : mediaQuery.size.width * 1,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 20),
+                                    child: TabBarView(children: [
+                                      SingleChildScrollView(
+                                          child: TweetScreen(
+                                              myData, isDesktop, mediaQuery)),
+                                      About(),
+                                    ]),
+                                  ),
+                                )),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    height: mediaQuery.size.height * 0.15,
+                                      width: mediaQuery.size.width,
+                                      color: Color(0xff060d14),
+                                      child: Center(child: Text("Made with flutter", style: TextStyle(color: Colors.grey),)),
+                                )
+                                )],
+                            ),
+                          )),
+
+                      //Text(myData[0]),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
-        floatingActionButton: FloatingActionButton(
-          onPressed: makeRequest,
-          child: Icon(Icons.add),
+            );
+          }),
         ));
   }
 }

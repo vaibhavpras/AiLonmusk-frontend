@@ -4,8 +4,8 @@ import './TweetList.dart';
 
 class TweetScreen extends StatefulWidget {
 
-  List<String> myData;
-  bool isDesktop;
+  final List<String> myData;
+  final bool isDesktop;
   final mediaQuery;
 
   TweetScreen( this.myData, this.isDesktop, this.mediaQuery);
@@ -25,9 +25,12 @@ class _TweetScreenState extends State<TweetScreen> {
                                 border:
                                     Border.all(color: Colors.grey, width: 0.5)),
                             child: Center(
-                              child: Text("No tweets yet",
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 12)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(50.0),
+                                child: Text("No tweets yet",
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 12)),
+                              ),
                             ),
                           )
                         : Container(
