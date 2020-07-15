@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Bio extends StatelessWidget {
-
   final BuildContext ctx;
 
   Bio({this.ctx});
@@ -20,7 +19,7 @@ class Bio extends StatelessWidget {
               child: Container(
                 child: Row(children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.only(left: 10, right:2),
                     child: Text(
                       "Elon Musk",
                       style: TextStyle(
@@ -28,12 +27,11 @@ class Bio extends StatelessWidget {
                     ),
                   ),
                   Container(
-                      color: Colors.white,
                       child: Image.network(
-                        'assets/verified.png',
-                        height: 10,
-                        width: 10,
-                      ))
+                    'assets/verified.png',
+                    height: 20,
+                    width: 20,
+                  ))
                 ]),
               ),
             ),
@@ -41,20 +39,20 @@ class Bio extends StatelessWidget {
               padding: const EdgeInsets.only(left: 10),
               child: Text(
                 "@elonmusk",
-                style: TextStyle(color: Colors.grey, fontSize: 12),
+                style: TextStyle(color: Color(0xff8899A6), fontSize: 12),
               ),
             ),
             Row(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 3, top: 8),
-                  child:
-                      Icon(Icons.calendar_today, color: Colors.grey, size: 12),
+                  child: Icon(Icons.calendar_today,
+                      color: Color(0xff8899A6), size: 12),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.only(top: 8),
                   child: Text("Joined June 2009",
-                      style: TextStyle(color: Colors.grey, fontSize: 12)),
+                      style: TextStyle(color: Color(0xff8899A6), fontSize: 12)),
                 )
               ],
             ),
@@ -72,7 +70,8 @@ class Bio extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 3, right: 8),
                       child: Text("Following",
-                          style: TextStyle(color: Colors.grey, fontSize: 12)),
+                          style: TextStyle(
+                              color: Color(0xff8899A6), fontSize: 12)),
                     ),
                     Text("36.8M",
                         style: TextStyle(
@@ -82,7 +81,8 @@ class Bio extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 3),
                       child: Text("Followers",
-                          style: TextStyle(color: Colors.grey, fontSize: 12)),
+                          style: TextStyle(
+                              color: Color(0xff8899A6), fontSize: 12)),
                     )
                   ],
                 ),
@@ -97,7 +97,7 @@ class Bio extends StatelessWidget {
                   backgroundImage: NetworkImage('assets/elonpfp.jpg'),
                   maxRadius: constraints.maxWidth * 0.11,
                 ),
-                width:constraints.maxWidth * 0.2 ,
+                width: constraints.maxWidth * 0.2,
                 height: constraints.maxWidth * 0.2,
                 padding: EdgeInsets.all(3.5), // borde width
                 decoration: BoxDecoration(

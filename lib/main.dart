@@ -15,10 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          primarySwatch: Colors.blue,
-          inputDecorationTheme: InputDecorationTheme(
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white)))),
+        primarySwatch: Colors.blue,
+      ),
       home: MyHomePage(),
     );
   }
@@ -58,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       data = data.replaceAll('<|startoftext|>', '');
+      data = data.replaceAll('\n', '');
       data = data.replaceAll('  ', '');
       myData.add(data);
       itemCount++;
@@ -100,8 +99,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: _isLoading
                             ? Container(
                                 alignment: Alignment.center,
-                                padding: EdgeInsets.only(top: 12.8, bottom: 10),
-                                child: Text("Elon is typing.... (he may take a while)",
+                                padding: EdgeInsets.only(top: 15, bottom: 12),
+                                child: Text(
+                                    "Elon is typing.... (he may take a while)",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -131,8 +131,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                           : mediaQuery.size.width * 0.2,
                                       width: 250,
                                       child: TextField(
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: isDesktop
+                                                ? 20
+                                                : mediaQuery.size.width *
+                                                    0.030),
                                         controller: prefixController,
                                         decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                              borderSide: new BorderSide(
+                                                  color: Colors.black)),
                                           contentPadding: EdgeInsets.all(5),
                                           prefixText: 'about ',
                                           prefixStyle: TextStyle(
@@ -165,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 fontSize: isDesktop
                                                     ? 15
                                                     : mediaQuery.size.width *
-                                                        0.03,
+                                                        0.02,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold)),
                                         disabledColor: Color(0xff1b7dba)),
@@ -180,11 +189,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           decoration: BoxDecoration(
                               border: Border(
                                   top: BorderSide(
-                                      width: 0.5, color: Colors.grey),
+                                      width: 0.5, color: Color(0xff8899A6)),
                                   left: BorderSide(
-                                      width: 0.5, color: Colors.grey),
+                                      width: 0.5, color: Color(0xff8899A6)),
                                   right: BorderSide(
-                                      width: 0.5, color: Colors.grey))),
+                                      width: 0.5, color: Color(0xff8899A6)))),
                           child: Bio(ctx: ctx)),
                       DefaultTabController(
                           length: 2,
@@ -197,22 +206,24 @@ class _MyHomePageState extends State<MyHomePage> {
                                   decoration: BoxDecoration(
                                       border: Border(
                                           left: BorderSide(
-                                              width: 0.5, color: Colors.grey),
+                                              width: 0.5,
+                                              color: Color(0xff8899A6)),
                                           right: BorderSide(
-                                              width: 0.5, color: Colors.grey))),
+                                              width: 0.5,
+                                              color: Color(0xff8899A6)))),
                                   width: isDesktop
                                       ? 500
                                       : mediaQuery.size.width * 1,
                                   child: TabBar(
                                       indicatorColor: Color(0xff1b7dba),
-                                      unselectedLabelColor: Colors.grey,
+                                      unselectedLabelColor: Color(0xff8899A6),
                                       labelColor: Color(0xff1b7dba),
                                       labelStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold),
                                       unselectedLabelStyle: TextStyle(
                                           fontSize: 12,
-                                          color: Colors.grey,
+                                          color: Color(0xff8899A6),
                                           fontWeight: FontWeight.bold),
                                       tabs: [
                                         Tab(
@@ -223,6 +234,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 Expanded(
                                     child: Container(
+                                      decoration: BoxDecoration(
+        border: Border(
+            top: BorderSide(width: 0.3, color: Color(0xff8899A6)),
+            left: BorderSide(width: 0.3, color: Color(0xff8899A6)),
+            right: BorderSide(width: 0.3, color: Color(0xff8899A6)),
+            //bottom: BorderSide(width: 0.3, color: Color(0xff8899A6))
+            ),
+      ),
                                   width: isDesktop
                                       ? 500
                                       : mediaQuery.size.width * 1,
@@ -237,14 +256,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 )),
                                 Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Container(
-                                    height: mediaQuery.size.height * 0.15,
+                                    alignment: Alignment.bottomCenter,
+                                    child: Container(
+                                      height: mediaQuery.size.height * 0.15,
                                       width: mediaQuery.size.width,
                                       color: Color(0xff060d14),
-                                      child: Center(child: Text("Made with flutter", style: TextStyle(color: Colors.grey),)),
-                                )
-                                )],
+                                      child: Center(
+                                          child: Text(
+                                        "Made with flutter",
+                                        style:
+                                            TextStyle(color: Color(0xff8899A6)),
+                                      )),
+                                    ))
+                              ],
                             ),
                           )),
 
