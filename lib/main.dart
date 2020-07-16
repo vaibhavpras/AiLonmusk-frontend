@@ -6,6 +6,7 @@ import 'dart:convert';
 import './Bio.dart';
 import './TweetScreen.dart';
 import './about.dart';
+import 'dart:html' as html;
 
 void main() => runApp(MyApp());
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'AiLonmusk',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -48,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     String data;
 
-    var extractdata = jsonDecode(response.body);
+    var extractdata = json.decode(utf8.decode(response.bodyBytes));
 
     data = extractdata['text'];
 
@@ -101,13 +102,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                 alignment: Alignment.center,
                                 padding: EdgeInsets.only(top: 15, bottom: 12),
                                 child: Text(
-                                    "Elon is typing.... (he may take a while)",
+                                    "AiLon is typing.... (he may take a while)",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: isDesktop
                                             ? 20
-                                            : mediaQuery.size.width * 0.03)),
+                                            : mediaQuery.size.width * 0.04)),
                               )
                             : Wrap(
                                 alignment: WrapAlignment.center,
@@ -115,34 +116,35 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Container(
                                     padding:
                                         EdgeInsets.only(top: 12.8, bottom: 10),
-                                    child: Text("Hey Elon, tweet something ",
+                                    child: Text("Hey AiLon, tweet something ",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                             fontSize: isDesktop
                                                 ? 20
                                                 : mediaQuery.size.width *
-                                                    0.03)),
+                                                    0.04)),
                                   ),
                                   Container(
                                       padding: EdgeInsets.only(right: 10),
                                       height: isDesktop
-                                          ? 60
-                                          : mediaQuery.size.width * 0.2,
+                                          ? 65
+                                          : mediaQuery.size.width * 0.25,
                                       width: 250,
                                       child: TextField(
+                                        maxLength: 150,
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: isDesktop
                                                 ? 20
-                                                : mediaQuery.size.width *
-                                                    0.030),
+                                                : mediaQuery.size.width * 0.04),
                                         controller: prefixController,
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(
                                               borderSide: new BorderSide(
                                                   color: Colors.black)),
-                                          contentPadding: EdgeInsets.all(5),
+                                          contentPadding: EdgeInsets.only(
+                                              top: 5, right: 10, left: 10),
                                           prefixText: 'about ',
                                           prefixStyle: TextStyle(
                                               color: Colors.white,
@@ -150,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               fontSize: isDesktop
                                                   ? 20
                                                   : mediaQuery.size.width *
-                                                      0.030),
+                                                      0.04),
                                         ),
                                       )),
                                   Container(
@@ -174,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 fontSize: isDesktop
                                                     ? 15
                                                     : mediaQuery.size.width *
-                                                        0.02,
+                                                        0.03,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold)),
                                         disabledColor: Color(0xff1b7dba)),
@@ -184,16 +186,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
 
                       Container(
-                          //height: mediaQuery.size.height * 0.52,
                           width: isDesktop ? 500 : mediaQuery.size.width * 1,
                           decoration: BoxDecoration(
                               border: Border(
                                   top: BorderSide(
-                                      width: 0.5, color: Color(0xff8899A6)),
+                                      width: 0.3, color: Color(0xff8899A6)),
                                   left: BorderSide(
-                                      width: 0.5, color: Color(0xff8899A6)),
+                                      width: 0.3, color: Color(0xff8899A6)),
                                   right: BorderSide(
-                                      width: 0.5, color: Color(0xff8899A6)))),
+                                      width: 0.3, color: Color(0xff8899A6)))),
                           child: Bio(ctx: ctx)),
                       DefaultTabController(
                           length: 2,
@@ -206,10 +207,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                   decoration: BoxDecoration(
                                       border: Border(
                                           left: BorderSide(
-                                              width: 0.5,
+                                              width: 0.3,
                                               color: Color(0xff8899A6)),
                                           right: BorderSide(
-                                              width: 0.5,
+                                              width: 0.3,
                                               color: Color(0xff8899A6)))),
                                   width: isDesktop
                                       ? 500
@@ -234,14 +235,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 Expanded(
                                     child: Container(
-                                      decoration: BoxDecoration(
-        border: Border(
-            top: BorderSide(width: 0.3, color: Color(0xff8899A6)),
-            left: BorderSide(width: 0.3, color: Color(0xff8899A6)),
-            right: BorderSide(width: 0.3, color: Color(0xff8899A6)),
-            //bottom: BorderSide(width: 0.3, color: Color(0xff8899A6))
-            ),
-      ),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      top: BorderSide(
+                                          width: 0.3, color: Color(0xff8899A6)),
+                                      left: BorderSide(
+                                          width: 0.3, color: Color(0xff8899A6)),
+                                      right: BorderSide(
+                                          width: 0.3, color: Color(0xff8899A6)),
+                                      //bottom: BorderSide(width: 0.3, color: Color(0xff8899A6))
+                                    ),
+                                  ),
                                   width: isDesktop
                                       ? 500
                                       : mediaQuery.size.width * 1,
@@ -257,16 +261,69 @@ class _MyHomePageState extends State<MyHomePage> {
                                 )),
                                 Align(
                                     alignment: Alignment.bottomCenter,
-                                    child: Container(
-                                      height: mediaQuery.size.height * 0.15,
-                                      width: mediaQuery.size.width,
-                                      color: Color(0xff060d14),
-                                      child: Center(
-                                          child: Text(
-                                        "Made with flutter",
-                                        style:
-                                            TextStyle(color: Color(0xff8899A6)),
-                                      )),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: mediaQuery.size.height * 0.15,
+                                          width: mediaQuery.size.width,
+                                          color: Color(0xff041320),
+                                          child: Center(
+                                              child: Column(children: [
+                                            Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 10),
+                                                    height: 30,
+                                                    width: 30,
+                                                    child: GestureDetector(
+                                                      child: Image.network(
+                                                          'assets/github.png'),
+                                                      onTap: () {
+                                                        html.window.open(
+                                                            "https://github.com/vaibhavpras",
+                                                            "Github");
+                                                      },
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 10),
+                                                    height: 30,
+                                                    width: 30,
+                                                    child: GestureDetector(
+                                                      child: Image.network(
+                                                          'assets/linkedin.png'),
+                                                      onTap: () {
+                                                        html.window.open(
+                                                            "https://linkedin.com/in/vaibhavpras",
+                                                            "Linkedin");
+                                                      },
+                                                    ),
+                                                  )
+                                                ]),
+                                            GestureDetector(
+                                              onTap: () {
+                                                html.window.open(
+                                                    "https://vprasanna.me",
+                                                    "Website");
+                                              },
+                                              child: Text(
+                                                "vprasanna.me",
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Color(0xff8899A6)),
+                                              ),
+                                            ),
+                                          ])),
+                                        ),
+                                      ],
                                     ))
                               ],
                             ),

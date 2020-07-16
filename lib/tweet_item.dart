@@ -13,8 +13,50 @@ class TweetItem extends StatefulWidget {
 }
 
 Random random = new Random();
+int rand = random.nextInt(300) + 60;
+int randC = random.nextInt(100) + 20;
 
 class _TweetItemState extends State<TweetItem> {
+  Image imgRetweet;
+  Image imgComment;
+  Image imgLike;
+
+  Image retweet = Image.network('assets/retweet.png');
+  Image comment = Image.network('assets/comment.png');
+  Image like = Image.network('assets/like.png');
+
+  Image retweetS = Image.network('assets/retweetS.png');
+  Image commentS = Image.network('assets/commentS.png');
+  Image likeS = Image.network('assets/likeS.png');
+
+  Text txtRetweet;
+  Text txtComment;
+  Text txtLike;
+
+  Text retweetTx = Text('${rand}K',
+      style: TextStyle(fontSize: 10, color: Color(0xff8899A6)));
+  Text commentTx = Text('${randC}K',
+      style: TextStyle(fontSize: 10, color: Color(0xff8899A6)));
+  Text likeTx = Text('${rand}K',
+      style: TextStyle(fontSize: 10, color: Color(0xff8899A6)));
+
+  Text retweetTxS = Text('${rand}K',
+      style: TextStyle(fontSize: 10, color: Color(0xff17bf63)));
+  Text commentTxS = Text('${randC}K',
+      style: TextStyle(fontSize: 10, color: Color(0xff1da1f2)));
+  Text likeTxS = Text('${rand}K',
+      style: TextStyle(fontSize: 10, color: Color(0xffe0245e)));
+
+  void initState() {
+    super.initState();
+    imgRetweet = retweet;
+    imgComment = comment;
+    imgLike = like;
+    txtRetweet = retweetTx;
+    txtComment = commentTx;
+    txtLike = likeTx;
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -30,7 +72,7 @@ class _TweetItemState extends State<TweetItem> {
         Container(
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
           child: CircleAvatar(
-            backgroundImage: NetworkImage('assets/elonpfp.jpg'),
+            backgroundImage: NetworkImage('assets/AiLonpfp.jpg'),
           ),
         ),
         Padding(
@@ -44,14 +86,14 @@ class _TweetItemState extends State<TweetItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Elon Musk",
+                    "AiLon Musk",
                     style: TextStyle(
                         fontSize: 12,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left:2),
+                    margin: EdgeInsets.only(left: 2),
                     child: Image.network(
                       'assets/verified.png',
                       width: 15,
@@ -59,9 +101,9 @@ class _TweetItemState extends State<TweetItem> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 6, right:8),
+                    margin: EdgeInsets.only(left: 6),
                     child: Text(
-                      "@elonmusk",
+                      "@AiLonmusk · ",
                       style: TextStyle(fontSize: 12, color: Color(0xff66757f)),
                     ),
                   ),
@@ -89,55 +131,74 @@ class _TweetItemState extends State<TweetItem> {
                     children: [
                       Row(
                         children: [
-                          Container(
-                            height: 14,
-                            width: 14,
-                            child: Image.network(
-                              'assets/comment.png',
-                              scale: 2,
-                            ),
-                          ),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  imgComment = commentS;
+                                  commentS = comment;
+                                  comment = imgComment;
+                                  txtComment = commentTxS;
+                                  commentTxS = commentTx;
+                                  commentTx = txtComment;
+                                });
+                              },
+                              child: Container(
+                                height: 14,
+                                width: 14,
+                                child: imgComment,
+                              )),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text('${random.nextInt(100) + 20}K',
-                                style: TextStyle(
-                                    fontSize: 10, color: Color(0xff8899A6))),
+                            child: txtComment,
                           ),
                         ],
                       ),
                       Row(children: [
-                        Container(
-                          height: 14,
-                          width: 14,
-                          child: Image.network(
-                            'assets/retweet.png',
-                            scale: 2,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              imgRetweet = retweetS;
+                              retweetS = retweet;
+                              retweet = imgRetweet;
+                              txtRetweet = retweetTxS;
+                              retweetTxS = retweetTx;
+                              retweetTx = txtRetweet;
+                            });
+                          },
+                          child: Container(
+                            height: 14,
+                            width: 14,
+                            child: imgRetweet,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text('${random.nextInt(300) + 20}K',
-                              style: TextStyle(
-                                  fontSize: 10, color: Color(0xff8899A6))),
+                          child: txtRetweet,
                         )
                       ]),
                       Row(
                           //mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
-                              height: 14,
-                              width: 14,
-                              child: Image.network(
-                                'assets/like.png',
-                                scale: 2,
-                              ),
-                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    imgLike = likeS;
+                                    likeS = like;
+                                    like = imgLike;
+                                    txtLike = likeTxS;
+                                    likeTxS = likeTx;
+                                    likeTx = txtLike;
+                                  });
+                                },
+                                child: Container(
+                                  height: 14,
+                                  width: 14,
+                                  child: imgLike,
+                                )),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
-                              child: Text('${random.nextInt(300) + 20}K',
-                                  style: TextStyle(
-                                      fontSize: 10, color: Color(0xff8899A6))),
+                              child: txtLike,
                             )
                           ]),
                     ]),

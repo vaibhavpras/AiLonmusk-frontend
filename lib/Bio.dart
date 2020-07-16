@@ -13,15 +13,15 @@ class Bio extends StatelessWidget {
         return Stack(children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(child: Image.network('assets/cover.jpg')),
-            //Text("Elon Musk", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            //Text("AiLon Musk", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
             Container(
               padding: EdgeInsets.only(top: constraints.maxWidth * 0.08),
               child: Container(
                 child: Row(children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 10, right:2),
+                    padding: const EdgeInsets.only(left: 10, right: 2),
                     child: Text(
-                      "Elon Musk",
+                      "AiLon Musk",
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
@@ -38,7 +38,7 @@ class Bio extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                "@elonmusk",
+                "@AiLonmusk",
                 style: TextStyle(color: Color(0xff8899A6), fontSize: 12),
               ),
             ),
@@ -94,7 +94,7 @@ class Bio extends StatelessWidget {
             left: constraints.maxWidth * 0.01,
             child: Container(
                 child: CircleAvatar(
-                  backgroundImage: NetworkImage('assets/elonpfp.jpg'),
+                  backgroundImage: NetworkImage('assets/AiLonpfp.jpg'),
                   maxRadius: constraints.maxWidth * 0.11,
                 ),
                 width: constraints.maxWidth * 0.2,

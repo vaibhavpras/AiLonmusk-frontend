@@ -1,4 +1,4 @@
-import 'package:ailonmuskfrontend/tweet_item.dart';
+import './tweet_item.dart';
 import 'package:flutter/material.dart';
 
 class TweetScreen extends StatefulWidget {
@@ -17,7 +17,6 @@ class _TweetScreenState extends State<TweetScreen> {
     return widget.myData.isEmpty
         ? Container(
             width: widget.isDesktop ? 500 : widget.mediaQuery.size.width * 1,
-            
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(50.0),
@@ -27,7 +26,6 @@ class _TweetScreenState extends State<TweetScreen> {
             ),
           )
         : Container(
-          
             width: widget.isDesktop ? 500 : widget.mediaQuery.size.width * 1,
             child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
