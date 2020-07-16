@@ -129,32 +129,32 @@ class _TweetItemState extends State<TweetItem> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  imgComment = commentS;
-                                  commentS = comment;
-                                  comment = imgComment;
-                                  txtComment = commentTxS;
-                                  commentTxS = commentTx;
-                                  commentTx = txtComment;
-                                });
-                              },
-                              child: Container(
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              imgComment = commentS;
+                              commentS = comment;
+                              comment = imgComment;
+                              txtComment = commentTxS;
+                              commentTxS = commentTx;
+                              commentTx = txtComment;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Container(
                                 height: 14,
                                 width: 14,
                                 child: imgComment,
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: txtComment,
-                          ),
-                        ],
-                      ),
-                      Row(children: [
-                        GestureDetector(
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: txtComment,
+                              ),
+                            ],
+                          )),
+                      GestureDetector(
                           onTap: () {
                             setState(() {
                               imgRetweet = retweetS;
@@ -165,42 +165,44 @@ class _TweetItemState extends State<TweetItem> {
                               retweetTx = txtRetweet;
                             });
                           },
-                          child: Container(
-                            height: 14,
-                            width: 14,
-                            child: imgRetweet,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: txtRetweet,
-                        )
-                      ]),
-                      Row(
-                          //mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    imgLike = likeS;
-                                    likeS = like;
-                                    like = imgLike;
-                                    txtLike = likeTxS;
-                                    likeTxS = likeTx;
-                                    likeTx = txtLike;
-                                  });
-                                },
-                                child: Container(
-                                  height: 14,
-                                  width: 14,
-                                  child: imgLike,
-                                )),
+                          child: Row(children: [
+                            Container(
+                              height: 14,
+                              width: 14,
+                              child: imgRetweet,
+                            ),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
-                              child: txtLike,
+                              child: txtRetweet,
                             )
-                          ]),
+                          ])),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            imgLike = likeS;
+                            likeS = like;
+                            like = imgLike;
+                            txtLike = likeTxS;
+                            likeTxS = likeTx;
+                            likeTx = txtLike;
+                          });
+                        },
+                        child: Row(
+                            //mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 14,
+                                width: 14,
+                                child: imgLike,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: txtLike,
+                              )
+                            ]),
+                      )
                     ]),
               )
             ],
