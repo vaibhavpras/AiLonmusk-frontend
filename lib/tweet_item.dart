@@ -13,8 +13,9 @@ class TweetItem extends StatefulWidget {
 }
 
 Random random = new Random();
-int rand = random.nextInt(300) + 60;
+int randR = random.nextInt(300) + 60;
 int randC = random.nextInt(100) + 20;
+int randL = random.nextInt(100) + 20;
 
 class _TweetItemState extends State<TweetItem> {
   Image imgRetweet;
@@ -33,18 +34,18 @@ class _TweetItemState extends State<TweetItem> {
   Text txtComment;
   Text txtLike;
 
-  Text retweetTx = Text('${rand}K',
+  Text retweetTx = Text('${randR}K',
       style: TextStyle(fontSize: 10, color: Color(0xff8899A6)));
   Text commentTx = Text('${randC}K',
       style: TextStyle(fontSize: 10, color: Color(0xff8899A6)));
-  Text likeTx = Text('${rand}K',
+  Text likeTx = Text('${randL}K',
       style: TextStyle(fontSize: 10, color: Color(0xff8899A6)));
 
-  Text retweetTxS = Text('${rand}K',
+  Text retweetTxS = Text('${randR}K',
       style: TextStyle(fontSize: 10, color: Color(0xff17bf63)));
   Text commentTxS = Text('${randC}K',
       style: TextStyle(fontSize: 10, color: Color(0xff1da1f2)));
-  Text likeTxS = Text('${rand}K',
+  Text likeTxS = Text('${randL}K',
       style: TextStyle(fontSize: 10, color: Color(0xffe0245e)));
 
   void initState() {
