@@ -1,61 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'dart:math';
+
 import 'package:intl/intl.dart';
+import 'dart:math';
 
 class TweetItem extends StatefulWidget {
   final String text;
+  //final randR;
+  //final randL;
+  //final randC;
 
-  TweetItem({this.text});
+  //TweetItem({this.text, this.randC, this.randR, this.randL});
+  TweetItem({
+    this.text,
+  });
 
   @override
   _TweetItemState createState() => _TweetItemState();
 }
 
-Random random = new Random();
-int randR = random.nextInt(300) + 60;
-int randC = random.nextInt(100) + 20;
-int randL = random.nextInt(100) + 20;
-
 class _TweetItemState extends State<TweetItem> {
-  Image imgRetweet;
-  Image imgComment;
-  Image imgLike;
+  Random random = new Random();
+  bool retweetS;
+  bool likeS;
+  bool commentS;
 
-  Image retweet = Image.network('assets/retweet.png');
-  Image comment = Image.network('assets/comment.png');
-  Image like = Image.network('assets/like.png');
-
-  Image retweetS = Image.network('assets/retweetS.png');
-  Image commentS = Image.network('assets/commentS.png');
-  Image likeS = Image.network('assets/likeS.png');
-
-  Text txtRetweet;
-  Text txtComment;
-  Text txtLike;
-
-  Text retweetTx = Text('${randR}K',
-      style: TextStyle(fontSize: 10, color: Color(0xff8899A6)));
-  Text commentTx = Text('${randC}K',
-      style: TextStyle(fontSize: 10, color: Color(0xff8899A6)));
-  Text likeTx = Text('${randL}K',
-      style: TextStyle(fontSize: 10, color: Color(0xff8899A6)));
-
-  Text retweetTxS = Text('${randR}K',
-      style: TextStyle(fontSize: 10, color: Color(0xff17bf63)));
-  Text commentTxS = Text('${randC}K',
-      style: TextStyle(fontSize: 10, color: Color(0xff1da1f2)));
-  Text likeTxS = Text('${randL}K',
-      style: TextStyle(fontSize: 10, color: Color(0xffe0245e)));
+  int randC;
+  int randL;
+  int randR;
 
   void initState() {
     super.initState();
-    imgRetweet = retweet;
-    imgComment = comment;
-    imgLike = like;
-    txtRetweet = retweetTx;
-    txtComment = commentTx;
-    txtLike = likeTx;
+    retweetS = false;
+    likeS = false;
+    commentS = false;
+    randC = random.nextInt(100) + 20;
+    randL = random.nextInt(200) + 60;
+    randR = random.nextInt(300) + 60;
   }
 
   @override
@@ -133,12 +114,7 @@ class _TweetItemState extends State<TweetItem> {
                       GestureDetector(
                           onTap: () {
                             setState(() {
-                              imgComment = commentS;
-                              commentS = comment;
-                              comment = imgComment;
-                              txtComment = commentTxS;
-                              commentTxS = commentTx;
-                              commentTx = txtComment;
+                              commentS = !commentS;
                             });
                           },
                           child: Row(
@@ -146,47 +122,55 @@ class _TweetItemState extends State<TweetItem> {
                               Container(
                                 height: 14,
                                 width: 14,
-                                child: imgComment,
+                                child: commentS == true
+                                    ? Image.network('assets/commentS.png')
+                                    : Image.network('assets/comment.png'),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: txtComment,
-                              ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: commentS == true
+                                      ? Text('${randC}K',
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              color: Color(0xff1da1f2)))
+                                      : Text('${randC}K',
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              color: Color(0xff8899A6)))),
                             ],
                           )),
                       GestureDetector(
                           onTap: () {
                             setState(() {
-                              imgRetweet = retweetS;
-                              retweetS = retweet;
-                              retweet = imgRetweet;
-                              txtRetweet = retweetTxS;
-                              retweetTxS = retweetTx;
-                              retweetTx = txtRetweet;
+                              retweetS = !retweetS;
                             });
                           },
                           child: Row(children: [
                             Container(
                               height: 14,
                               width: 14,
-                              child: imgRetweet,
+                              child: retweetS == true
+                                  ? Image.network('assets/retweetS.png')
+                                  : Image.network('assets/retweet.png'),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: txtRetweet,
-                            )
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: retweetS == true
+                                    ? Text('${randR}K',
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            color: Color(0xff17bf63)))
+                                    : Text('${randR}K',
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            color: Color(0xff8899A6)))),
                           ])),
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            imgLike = likeS;
-                            likeS = like;
-                            like = imgLike;
-                            txtLike = likeTxS;
-                            likeTxS = likeTx;
-                            likeTx = txtLike;
+                            likeS = !likeS;
                           });
                         },
                         child: Row(
@@ -195,13 +179,22 @@ class _TweetItemState extends State<TweetItem> {
                               Container(
                                 height: 14,
                                 width: 14,
-                                child: imgLike,
+                                child: likeS == true
+                                    ? Image.network('assets/likeS.png')
+                                    : Image.network('assets/like.png'),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: txtLike,
-                              )
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: likeS == true
+                                      ? Text('${randL}K',
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              color: Color(0xffe0245e)))
+                                      : Text('${randL}K',
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              color: Color(0xff8899A6)))),
                             ]),
                       )
                     ]),

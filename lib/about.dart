@@ -26,7 +26,7 @@ class About extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(10),
               child: Text(
-                "The model works best when the prefix text is longer and is something closely relevant to Elon's public lifestyle and businesses.",
+                "The model works best when the prefix text is something closely relevant to Elon's public lifestyle and businesses or is left blank.",
                 style: TextStyle(color: Color(0xff8899A6), fontSize: 12),
               ),
             ),

@@ -1,22 +1,20 @@
 import './tweet_item.dart';
 import 'package:flutter/material.dart';
 
-class TweetScreen extends StatefulWidget {
+
+class TweetScreen extends StatelessWidget {
   final List<String> myData;
   final bool isDesktop;
   final mediaQuery;
 
   TweetScreen(this.myData, this.isDesktop, this.mediaQuery);
-  @override
-  _TweetScreenState createState() => _TweetScreenState();
-}
 
-class _TweetScreenState extends State<TweetScreen> {
+
   @override
   Widget build(BuildContext context) {
-    return widget.myData.isEmpty
+    return myData.isEmpty
         ? Container(
-            width: widget.isDesktop ? 500 : widget.mediaQuery.size.width * 1,
+            width: isDesktop ? 500 : mediaQuery.size.width * 1,
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(50.0),
@@ -26,14 +24,17 @@ class _TweetScreenState extends State<TweetScreen> {
             ),
           )
         : Container(
-            width: widget.isDesktop ? 500 : widget.mediaQuery.size.width * 1,
+            width: isDesktop ? 500 : mediaQuery.size.width * 1,
             child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 reverse: true,
                 shrinkWrap: true,
-                itemCount: widget.myData.length,
+                itemCount: myData.length,
                 itemBuilder: (ctx, index) {
-                  return TweetItem(text: widget.myData[index]);
+                  return TweetItem(
+                    text: myData[index],
+          
+                  );
                 }),
           );
   }
