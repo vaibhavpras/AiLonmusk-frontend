@@ -1,16 +1,9 @@
 # ailonmuskfrontend
 
-A new Flutter project.
+AiLon Musk uses GPT-2 to generate funny tweets based on Elon Musk’s publicly available data
 
-## Getting Started
+## How to use?
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The demo is available at https://ailonmusk.com
+Type in any word in the prompt to set that word as the seed for the tweet generation.
+Prompt can also be left blank to get random tweets.
