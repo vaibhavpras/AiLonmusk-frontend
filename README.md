@@ -46,11 +46,11 @@ AiLon Musk is a web-app that lets you generate fake tweets in line with somethin
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/vaibhavpras/AiLonmusk-frontend
+   git clone https://github.com/vaibhavpras/ailonmusk
    ```
 2. Navigate to the project directory
    ```sh
-   cd AiLonmusk-frontend
+   cd ailonmusk
    ```
 3. To serve your app from `localhost` in Chrome, enter the following in the project directory:
    ```sh
@@ -75,5 +75,5 @@ Information about the backend of this web-app and the API endpoint can be found 
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License
 
