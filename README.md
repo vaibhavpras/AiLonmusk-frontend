@@ -10,7 +10,7 @@
   <p align="center">
     Make Elon Musk tweet about anything!
     <br />
-  <a href="https://ailonmusk.netlify.app">ailonmusk.com</a>
+  <a href="https://ailonmusk.netlify.app">ailonmusk.netlify.app</a>
   </p>
 </p>
 
@@ -60,7 +60,7 @@ AiLon Musk is a web-app that lets you generate fake tweets in line with somethin
 
 ## Usage
 
-Demo can be found at: [ailonmusk.com](https://ailonmusk.netlify.app)
+Demo can be found at: [ailonmusk.netlify.app](https://ailonmusk.netlify.app)
 
 Type in any word in the ```about``` prompt to set that word as the seed for the tweet generation. Longer strings will generate more cohesive tweets.
 
